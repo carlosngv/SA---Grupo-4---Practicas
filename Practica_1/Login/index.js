@@ -1,3 +1,4 @@
+require('./loggger/logger');
 require('dotenv').config();
 const express = require('express')
 const cors = require('cors');
@@ -26,14 +27,12 @@ app.use((req, res, next) => {
 });
 
 
-//const router = require('./router/router')
-//app.use('/router', router)
-
-app.get('/', (req,res) => {
-    return res.send('APP Login')
-})
+const router = require('./router/router')
+app.use('/', router)
 
 
 app.listen(process.env.PORT, () => {
-  console.log(`Example app listening on port ${process.env.PORT}`)
+  //console.log(`Example app listening on port ${process.env.PORT}`)
+  global.log.info(`API ejecutandose en el puerto ${process.env.PORT}`);
+
 })
