@@ -5,7 +5,7 @@ const { timestamp, combine } = winston.format;
 const { LOG_PATH, LOG_LEVEL, SERVICE_NAME } = {
   LOG_PATH: 'logs',
   LOG_LEVEL: process.env.NODE_ENV === 'prod' ? 'info' : 'debug',
-  SERVICE_NAME: 'ACCOUNT',
+  SERVICE_NAME: 'LOGIN',
 };
 
 const logTransport = new winston.transports.File({

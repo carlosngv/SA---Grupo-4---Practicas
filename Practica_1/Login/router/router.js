@@ -45,7 +45,8 @@ router.post('/repartidor', function (req, res) {
 
 
 router.post('/prueba1', [verify], function (req, res) {
-  res.send(req.user);
+  const {id} = req.user.client;
+  res.send(`${id}`);
 }); 
 
 

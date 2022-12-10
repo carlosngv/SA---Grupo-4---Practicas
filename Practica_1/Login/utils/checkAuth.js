@@ -17,7 +17,7 @@ module.exports = (req, res, next) => {
         return res.status(403).json({"success": false, "message": error});
       } else {
         req.user = authData;
-        global.log.error('Token Available');
+        global.log.info('Token Available');
       }
     });
 
