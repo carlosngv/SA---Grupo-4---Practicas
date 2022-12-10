@@ -2,12 +2,7 @@ const { deliveries } = require("../utils/data")
 
 
 
-/* Ejemplo de entrada
-    {
-        repartidorID: 12,
-        pedidoID: 23
-    }
-*/
+
 const recibirPedido = (req, res) => {
 
     try {
