@@ -21,29 +21,6 @@ router.post('/cliente', function (req, res) {
   res.send(token);
 });
 
-
-router.post('/restaurante', function (req, res) {
-  const user = {
-    id: 1,
-    name: 'TONY MUX',
-    email: 'pgmail@gmail.com',
-  };
-
-  res.send(authenticate.setToken(user));
-});
-
-
-router.post('/repartidor', function (req, res) {
-  const user = {
-    id: 1,
-    name: 'TONY MUX',
-    email: 'pgmail@gmail.com',
-  };
-
-  res.send(authenticate.setToken(user));
-});
-
-
 router.post('/prueba1', [verify], function (req, res) {
   const {id} = req.user.client;
   res.send(`${id}`);
@@ -52,26 +29,45 @@ router.post('/prueba1', [verify], function (req, res) {
 
 var arreglos=[];
 
+
+function getRandomInt(max) {
+  return Math.floor(Math.random() * max);
+}
+
+
 //Restaurante
 // o Recibir pedido del cliente -  Post
 
 router.post('/restaurante/recibir/pedido', [verify], function (req, res) {
   try {
-    const {id} = req.user.client;
-  const {productos} = req.body;
+            const {id} = req.user.client;
+            const {productos} = req.body;
 
-  var resultado={
-    id,
-    "estado": true,
-    "estado_repartidor": true,
-    productos,
-"direccion": "28 calle zona 1 de Guatemala"
-}
-arreglos.push(resultado);
+            var estado = getRandomInt(2);
+            var estado_repartidor = getRandomInt(2);
 
-global.log.info(`pedido recibido`);
-res.send(arreglos);
-  
+            var resultado={
+                          id,
+                          "estado": (estado ==1 ? true : false),
+                          "estado_repartidor": (estado_repartidor ==0 ? true : false),
+                          productos,
+                          "direccion": "28 calle zona 1 de Guatemala"
+                          }
+          var existencia = false;
+           arreglos.forEach(element => {
+           if(element.id == resultado.id){
+           existencia = true;
+           }                
+          });  
+
+           if(existencia == false){
+            arreglos.push(resultado);
+           }    
+          
+
+          global.log.info(`pedido recibido`);
+          res.send(arreglos);
+            
   } catch (error) {
     global.log.info(`pedido no recibido - ${error}`);
 
@@ -89,43 +85,87 @@ res.send(arreglos);
 
 
 // o Informar estado del pedido al cliente - Get
-// {
-//             "usuarioid": 10,
-// 			"pedidoid": 9
-// }
+router.post('/restaurante/estado/pedido', [verify], function (req, res) {
+  try {
+            const {id} = req.user.client;   
+            var estado;
+            
+            arreglos.forEach(element => {
+            if(element.id){
+              estado = element.estado;
+              }
+
+
+            //console.log(element.id);
+            });
+
+            var resultado={
+                          id,
+                          estado,
+                          }
+
+          
+
+          global.log.info(`busqueda pedido satisfactorio`);
+          res.send(resultado);
+            
+  } catch (error) {
+    global.log.info(`no se pudo buscar pedido - ${error}`);
+
+    
+  }
+  
+
+
+
+
+
+});
+
+
+
 
 
 // o Avisar al repartidor que ya está listo el pedido - Post
-// {
-// 			"repartidorid": 78,
-//             "pedidoid": 45
-// }
+// o Informar estado del pedido al cliente - Get
+router.post('/restaurante/estado/pedido', [verify], function (req, res) {
+  try {
+            const {id} = req.user.client;
+
+   
+            var estado;
+            
+            arreglos.forEach(element => {
+            if(element.id){
+              estado = element.estado;
+              }
+
+
+            //console.log(element.id);
+            });
+
+            var resultado={
+                          id,
+                          estado,
+                          }
+
+          
+
+          global.log.info(`busqueda pedido satisfactorio`);
+          res.send(resultado);
+            
+  } catch (error) {
+    global.log.info(`no se pudo buscar pedido - ${error}`);
+
+    
+  }
+  
 
 
 
-// • Repartidor
-// o Recibir pedido del restaurante - Get
-// {
-// 			"restauranteid": 78
-// }
-
-// o Informar estado del pedido al cliente - Post
-// {
-// 			"pedidoid": 45,
-//             "clienteid": 12
-// }
-
-// o Marcar como entregado - put
-// {
-// 			"pedidoid": 45,
-//             "status": "entregado"
-// }
 
 
-
-
-
-
+});
 
 
 
