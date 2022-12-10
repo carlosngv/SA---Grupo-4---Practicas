@@ -5,7 +5,7 @@ services:
     ports:
       - "3030:3030"
   cliente:
-    build: ./Login
+    build: ./Cliente
     ports:
       - "4000:4000"
   repartidor:
