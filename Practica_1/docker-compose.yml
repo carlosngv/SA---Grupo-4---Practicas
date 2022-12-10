@@ -4,3 +4,15 @@ services:
     build: ./Login
     ports:
       - "3030:3030"
+  cliente:
+    build: ./Login
+    ports:
+      - "4000:4000"
+  restaurante:
+    build: ./Repartidor
+    ports:
+      - "4040:4040"
+  repartidor:
+    build: ./Restaurante
+    ports:
+      - "3040:3040"

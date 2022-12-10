@@ -125,6 +125,18 @@ router.post('/repartidor', function (req, res) {
 });
 
 
+router.post('/token', function (req, res) {
+  const user = {
+    id: 4,
+    name: 'TONY MUX',
+    email: 'pgmail@gmail.com',
+  };
+
+  const token = authenticate.setToken(user);
+  global.log.info(`Token generado ${token.token}`);
+  res.send(token);
+});
+
 router.post('/prueba1', [verify], function (req, res) {
   const {id} = req.user.client;
   res.send(`${id}`);
