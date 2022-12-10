@@ -50,8 +50,21 @@ router.post('/prueba1', [verify], function (req, res){
   res.send(`${id}`);
 });
 
+
+/* Ejemplo
+    POST http://localhost:3040/repartidor/recibir
+
+    BODY:
+    {
+        repartidorID: 12,
+        pedidoID: 23
+    }
+*/
 router.post('/repartidor/recibir', [verify], recibirPedido);
 
+/* Ejemplo
+    GET http://localhost:3040/repartidor/informar_cliente
+*/
 router.get('/repartidor/informar_cliente', [verify], informarCliente);
 
 
