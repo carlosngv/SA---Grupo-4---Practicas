@@ -8,7 +8,7 @@ services:
     build: ./Login
     ports:
       - "4000:4000"
-  restaurante:
+  repartidor:
     build: ./Repartidor
     ports:
       - "3040:3040"
