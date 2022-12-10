@@ -12,7 +12,7 @@ services:
     build: ./Repartidor
     ports:
       - "3040:3040"
-  repartidor:
+  restaurante:
     build: ./Restaurante
     ports:
       - "4040:4040"
