@@ -1,4 +1,4 @@
-FROM node:14-alpine 
+FROM node:14-alpine
 
 WORKDIR /developer
 
@@ -6,10 +6,10 @@ COPY package*.json ./
 
 ENV PATH /developer/node_modules/.bin:$PATH
 
-RUN npm install 
+RUN npm install
 
-COPY . . 
+COPY . .
 
-EXPOSE 3030
+EXPOSE 3040
 
 CMD [ "node", "index.js"]
