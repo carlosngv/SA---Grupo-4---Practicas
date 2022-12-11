@@ -37,7 +37,7 @@ var deliveries = [
     },
 
 
-] ;
+];
 
 module.exports = {
     deliveries

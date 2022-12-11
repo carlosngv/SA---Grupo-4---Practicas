@@ -47,7 +47,7 @@ router.post('/repartidor', function (req, res) {
 router.post('/prueba1', [verify], function (req, res) {
   const {id} = req.user.client;
   res.send(`${id}`);
-}); 
+});
 
 
 var arreglos=[];
@@ -71,13 +71,13 @@ arreglos.push(resultado);
 
 global.log.info(`pedido recibido`);
 res.send(arreglos);
-  
+
   } catch (error) {
     global.log.info(`pedido no recibido - ${error}`);
 
-    
+
   }
-  
+
 
 
 
