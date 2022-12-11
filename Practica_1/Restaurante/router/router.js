@@ -21,29 +21,6 @@ router.post('/cliente', function (req, res) {
   res.send(token);
 });
 
-
-router.post('/restaurante', function (req, res) {
-  const user = {
-    id: 1,
-    name: 'TONY MUX',
-    email: 'pgmail@gmail.com',
-  };
-
-  res.send(authenticate.setToken(user));
-});
-
-
-router.post('/repartidor', function (req, res) {
-  const user = {
-    id: 1,
-    name: 'TONY MUX',
-    email: 'pgmail@gmail.com',
-  };
-
-  res.send(authenticate.setToken(user));
-});
-
-
 router.post('/prueba1', [verify], function (req, res) {
   const {id} = req.user.client;
   res.send(`${id}`);
@@ -52,11 +29,18 @@ router.post('/prueba1', [verify], function (req, res) {
 
 var arreglos=[];
 
+
+function getRandomInt(max) {
+  return Math.floor(Math.random() * max);
+}
+
+
 //Restaurante
 // o Recibir pedido del cliente -  Post
 
 router.post('/restaurante/recibir/pedido', [verify], function (req, res) {
   try {
+<<<<<<< HEAD
     const {id} = req.user.client;
   const {productos} = req.body;
 
@@ -72,6 +56,37 @@ arreglos.push(resultado);
 global.log.info(`pedido recibido`);
 res.send(arreglos);
 
+=======
+            const {id} = req.user.client;
+            const {productos} = req.body;
+
+            var estado = getRandomInt(2);
+            var estado_repartidor = getRandomInt(2);
+
+            var resultado={
+                          id,
+                          "estado": (estado ==1 ? true : false),
+                          "estado_repartidor": (estado_repartidor ==0 ? true : false),
+                          productos,
+                          "direccion": "28 calle zona 1 de Guatemala"
+                          }
+          var existencia = false;
+           arreglos.forEach(element => {
+           if(element.id == resultado.id){
+           existencia = true;
+           resultado = elemnt;
+           }                
+          });  
+
+           if(existencia == false){
+            arreglos.push(resultado);
+           }    
+          
+
+          global.log.info(`pedido recibido`);
+          res.send(arreglos);
+            
+>>>>>>> 9e40f9465ff9e3fbbddf5fcace5167ff6aae251f
   } catch (error) {
     global.log.info(`pedido no recibido - ${error}`);
 
@@ -89,42 +104,112 @@ res.send(arreglos);
 
 
 // o Informar estado del pedido al cliente - Get
-// {
-//             "usuarioid": 10,
-// 			"pedidoid": 9
-// }
+router.post('/restaurante/estado/pedido', [verify], function (req, res) {
+  try {
+            const {id} = req.user.client;   
+            var estado;
+            var existencia=false;
+
+            arreglos.forEach(element => {
+            if(element.id==id){
+              estado = element.estado;
+              existencia = true;
+              }
 
 
-// o Avisar al repartidor que ya está listo el pedido - Post
-// {
-// 			"repartidorid": 78,
-//             "pedidoid": 45
-// }
+            //console.log(element.id);
+            });
+
+            if(existencia == false){
+              var resultado={
+                id,
+                "descripcion":"no hay pedido ni estado"
+
+                }
+
+              }else{
+                var resultado={
+                  id,
+                  estado,
+                  "descripcion":"Estado del pedido al restaurante"
+                  }
+
+                }
+
+            
+          
+
+          global.log.info(`busqueda pedido satisfactorio`);
+          res.send(resultado);
+            
+  } catch (error) {
+    global.log.info(`no se pudo buscar pedido - ${error}`);
+
+    
+  }
+  
 
 
 
-// • Repartidor
-// o Recibir pedido del restaurante - Get
-// {
-// 			"restauranteid": 78
-// }
 
-// o Informar estado del pedido al cliente - Post
-// {
-// 			"pedidoid": 45,
-//             "clienteid": 12
-// }
 
-// o Marcar como entregado - put
-// {
-// 			"pedidoid": 45,
-//             "status": "entregado"
-// }
+});
 
 
 
 
 
+// o Avisar al repartidor que ya está listo el pedido
+router.post('/restaurante/aviso/repartidor', [verify], function (req, res) {
+  try {
+    const {id} = req.user.client;   
+    var estado;
+    var existencia=false;
+
+    arreglos.forEach(element => {
+    if(element.id==id){
+      estado = element.estado;
+      existencia = true;
+      }
+
+
+    //console.log(element.id);
+    });
+
+    if(existencia == false){
+      var resultado={
+        id,
+        "descripcion":"No hay pedido ni estado"
+
+        }
+
+      }else{
+        var resultado={
+          id,
+          estado,
+          "descripcion":"Aviso del estado al repartidor"
+          }
+
+        }
+
+    
+  
+
+  global.log.info(`busqueda pedido satisfactorio`);
+  res.send(resultado);
+    
+} catch (error) {
+global.log.info(`no se pudo buscar pedido - ${error}`);
+
+
+}
+
+
+
+
+
+
+});
 
 
 
