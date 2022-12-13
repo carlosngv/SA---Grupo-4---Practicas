@@ -1,4 +1,5 @@
 version: "3.9"
+
 services:
   login:
     build: ./Login
@@ -12,6 +13,10 @@ services:
     build: ./Repartidor
     ports:
       - "3040:3040"
+  repartidor-python:
+    build: ./RepartidorPython
+    ports:
+      - "4030:5000"
   restaurante:
     build: ./Restaurante
     ports:

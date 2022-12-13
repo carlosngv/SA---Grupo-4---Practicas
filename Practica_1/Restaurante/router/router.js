@@ -40,23 +40,7 @@ function getRandomInt(max) {
 
 router.post('/restaurante/recibir/pedido', [verify], function (req, res) {
   try {
-<<<<<<< HEAD
-    const {id} = req.user.client;
-  const {productos} = req.body;
 
-  var resultado={
-    id,
-    "estado": true,
-    "estado_repartidor": true,
-    productos,
-"direccion": "28 calle zona 1 de Guatemala"
-}
-arreglos.push(resultado);
-
-global.log.info(`pedido recibido`);
-res.send(arreglos);
-
-=======
             const {id} = req.user.client;
             const {productos} = req.body;
 
@@ -64,29 +48,28 @@ res.send(arreglos);
             var estado_repartidor = getRandomInt(2);
 
             var resultado={
-                          id,
-                          "estado": (estado ==1 ? true : false),
-                          "estado_repartidor": (estado_repartidor ==0 ? true : false),
-                          productos,
-                          "direccion": "28 calle zona 1 de Guatemala"
-                          }
+              id,
+              "estado": (estado ==1 ? true : false),
+              "estado_repartidor": (estado_repartidor ==0 ? true : false),
+              productos,
+              "direccion": "28 calle zona 1 de Guatemala"
+            }
           var existencia = false;
            arreglos.forEach(element => {
            if(element.id == resultado.id){
            existencia = true;
-           resultado = elemnt;
-           }                
-          });  
+           resultado = element;
+           }
+          });
 
            if(existencia == false){
             arreglos.push(resultado);
-           }    
-          
+           }
+
 
           global.log.info(`pedido recibido`);
           res.send(arreglos);
-            
->>>>>>> 9e40f9465ff9e3fbbddf5fcace5167ff6aae251f
+
   } catch (error) {
     global.log.info(`pedido no recibido - ${error}`);
 
@@ -106,7 +89,7 @@ res.send(arreglos);
 // o Informar estado del pedido al cliente - Get
 router.post('/restaurante/estado/pedido', [verify], function (req, res) {
   try {
-            const {id} = req.user.client;   
+            const {id} = req.user.client;
             var estado;
             var existencia=false;
 
@@ -136,18 +119,18 @@ router.post('/restaurante/estado/pedido', [verify], function (req, res) {
 
                 }
 
-            
-          
+
+
 
           global.log.info(`busqueda pedido satisfactorio`);
           res.send(resultado);
-            
+
   } catch (error) {
     global.log.info(`no se pudo buscar pedido - ${error}`);
 
-    
+
   }
-  
+
 
 
 
@@ -162,7 +145,7 @@ router.post('/restaurante/estado/pedido', [verify], function (req, res) {
 // o Avisar al repartidor que ya está listo el pedido
 router.post('/restaurante/aviso/repartidor', [verify], function (req, res) {
   try {
-    const {id} = req.user.client;   
+    const {id} = req.user.client;
     var estado;
     var existencia=false;
 
@@ -192,12 +175,12 @@ router.post('/restaurante/aviso/repartidor', [verify], function (req, res) {
 
         }
 
-    
-  
+
+
 
   global.log.info(`busqueda pedido satisfactorio`);
   res.send(resultado);
-    
+
 } catch (error) {
 global.log.info(`no se pudo buscar pedido - ${error}`);
 

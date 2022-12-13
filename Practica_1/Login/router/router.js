@@ -36,7 +36,7 @@ const restaurantes = [
     pass: 'dfgh'
   }
 ];
-const repartidores = [  
+const repartidores = [
   {
     id: 1,
     user: 'repa1',
@@ -79,7 +79,7 @@ router.post('/cliente', function (req, res) {
 });
 
 
-router.post('/restaurante', function (req, res) {
+router.post('/  ', function (req, res) {
   try {
     const {user, pass} = req.body;
     var result = restaurantes.filter(function (item) {
@@ -140,7 +140,7 @@ router.post('/token', function (req, res) {
 router.post('/prueba1', [verify], function (req, res) {
   const {id} = req.user.client;
   res.send(`${id}`);
-}); 
+});
 
 
 // export this router to use in our index.js
