@@ -1,9 +1,8 @@
 pipeline {
     agent any
     tools {
-        nodejs "node"
+        nodejs "jenkins-nodejs"
     }
-
     stages {
         stage('Copying repository') {
             steps {
@@ -12,18 +11,17 @@ pipeline {
         }
         stage('Install dependencies') {
             steps{
-                bat 'cd Practica_3'
-                bat 'npm install'
+                sh 'cd Practica_3 && npm install'
             }
         }
         stage('Unit testing'){
             steps{
-                bat 'npm run test'
+                sh 'cd Practica_3 && npm run test'
             }
         }
         stage('Build'){
             steps {
-                bat 'npm install'
+                sh 'cd Practica_3 && npm install'
             }
         }
     }
