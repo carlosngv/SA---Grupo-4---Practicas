@@ -1,0 +1,30 @@
+pipeline {
+    agent any
+    tools {
+        nodejs "node"
+    }
+
+    stages {
+        stage('Copying repository') {
+            steps {
+                git branch: 'main', credentialsId: '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', url: 'https://github.com/carlosngv/SA-G4-Practicas'
+            }
+        }
+        stage('Install dependencies') {
+            steps{
+                bat 'cd Practica_3'
+                bat 'npm install'
+            }
+        }
+        stage('Unit testing'){
+            steps{
+                bat 'npm run test'
+            }
+        }
+        stage('Build'){
+            steps {
+                bat 'npm install'
+            }
+        }
+    }
+}
