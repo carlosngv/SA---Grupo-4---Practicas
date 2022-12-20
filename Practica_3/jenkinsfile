@@ -19,6 +19,13 @@ pipeline {
                 sh 'cd Practica_3 && npm run test'
             }
         }
+        stage("build & SonarQube analysis") {
+          node {
+              withSonarQubeEnv('SONARQUBE') {
+                 sh 'mvn clean package sonar:sonar'
+              }
+          }
+      }
         stage('Build'){
             steps {
                 sh 'cd Practica_3 && npm install'
