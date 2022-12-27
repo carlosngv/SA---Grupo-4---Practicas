@@ -1,9 +1,12 @@
-# Create a single Compute Engine instance
-resource "google_compute_instance" "default" {
-  name         = "flask-vm"
-  machine_type = "f1-micro"
-  zone         = "us-west4-b"
-  tags         = ["ssh"]
+provider "google" {
+  project = "platzi-369622"
+  region  = "us-west4"
+  zone    = "us-west4-b"
+}
+
+resource "google_compute_instance" "vm_instance" {
+  name         = "terraform-instance"
+  machine_type = "e2-micro"
 
   boot_disk {
     initialize_params {
@@ -11,14 +14,15 @@ resource "google_compute_instance" "default" {
     }
   }
 
-  # Install Flask
-  metadata_startup_script = "sudo apt-get update; sudo apt-get install -yq build-essential python3-pip rsync; pip install flask"
-
-   network_interface {
+  network_interface {
+    # A default network is created for all GCP projects
     network = "default"
-
     access_config {
-      // Ephemeral public IP
     }
   }
+}
+
+resource "google_compute_network" "vpc_network" {
+  name                    = "terraform-network"
+  auto_create_subnetworks = "true"
 }
