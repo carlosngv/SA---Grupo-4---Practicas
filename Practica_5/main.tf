@@ -1,55 +1,24 @@
-provider "aws" {
-  region = var.aws_region
-}
+# Create a single Compute Engine instance
+resource "google_compute_instance" "default" {
+  name         = "flask-vm"
+  machine_type = "f1-micro"
+  zone         = "us-west4-b"
+  tags         = ["ssh"]
 
-#Create security group with firewall rules
-resource "aws_security_group" "my_security_group" {
-  name        = var.security_group
-  description = "security group for Ec2 instance"
-
-  ingress {
-    from_port   = 8080
-    to_port     = 8080
-    protocol    = "tcp"
-    cidr_blocks = ["0.0.0.0/0"]
+  boot_disk {
+    initialize_params {
+      image = "debian-cloud/debian-11"
+    }
   }
 
- ingress {
-    from_port   = 22
-    to_port     = 22
-    protocol    = "tcp"
-    cidr_blocks = ["0.0.0.0/0"]
-  }
+  # Install Flask
+  metadata_startup_script = "sudo apt-get update; sudo apt-get install -yq build-essential python3-pip rsync; pip install flask"
 
- # outbound from jenkis server
-  egress {
-    from_port   = 0
-    to_port     = 65535
-    protocol    = "tcp"
-    cidr_blocks = ["0.0.0.0/0"]
-  }
+  network_interface {
+    subnetwork = google_compute_subnetwork.default.id
 
-  tags= {
-    Name = var.security_group
-  }
-}
-
-# Create AWS ec2 instance
-resource "aws_instance" "myFirstInstance" {
-  ami           = var.ami_id
-  key_name = var.key_name
-  instance_type = var.instance_type
-  security_groups= [var.security_group]
-  tags= {
-    Name = var.tag_name
-  }
-}
-
-# Create Elastic IP address
-resource "aws_eip" "myFirstInstance" {
-  vpc      = true
-  instance = aws_instance.myFirstInstance.id
-tags= {
-    Name = "my_elastic_ip"
+    access_config {
+      # Include this section to give the VM an external IP address
+    }
   }
 }
