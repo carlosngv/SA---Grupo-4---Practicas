@@ -14,4 +14,11 @@ resource "google_compute_instance" "default" {
   # Install Flask
   metadata_startup_script = "sudo apt-get update; sudo apt-get install -yq build-essential python3-pip rsync; pip install flask"
 
+   network_interface {
+    network = "default"
+
+    access_config {
+      // Ephemeral public IP
+    }
+  }
 }
