@@ -1,25 +1,22 @@
 pipeline {
     agent any
 
-    stages {
-        stage('Checkout') {
+    stages{
+        stage('Copying repository') {
             steps {
-            checkout([$class: 'GitSCM', branches: [[name: '*/main']], extensions: [], userRemoteConfigs: [[url: 'https://github.com/carlosngv/SA-G4-Practicas']]])
-
-          }
+                git branch: 'main', credentialsId: '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', url: 'https://github.com/carlosngv/SA-G4-Practicas'
+            }
         }
-
-        stage ("terraform init") {
-            steps {
+        stage('Terraform Init'){
+            steps{
                 sh 'cd Practica_5 && terraform init'
             }
         }
-
-        stage ("terraform Action") {
-            steps {
-                echo "Terraform action is --> ${action}"
-                sh 'cd Practica_5 && terraform ${action} --auto-approve'
-           }
+        stage('Terraform apply'){
+            steps{
+                sh 'cd Practica_5 && terraform apply -auto-approve'
+            }
         }
     }
+
 }
